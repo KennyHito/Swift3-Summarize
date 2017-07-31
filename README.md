@@ -33,8 +33,14 @@
 三方库的使用,目前是写到什么地方就会添加,所以会持续更新ing... 🏊🏊🏊🏊🏊🏊
 
 * 2017.07.21
-    > 网络监听
 
+    > 网络监听
+    > 效果图
+<div>
+<img width="250" height="400" src="image/12345.gif" />
+</div>
+
+    > 代码
 ~~~
 func checkNetwork() -> Void {
     reachability.whenReachable = { reachability in
@@ -61,3 +67,23 @@ func checkNetwork() -> Void {
     }
 }
 ~~~
+
+
+
+    > 下拉刷新
+
+~~~
+func setRefresh() -> Void{
+    tableView?.es_addPullToRefresh {
+    [weak self] in
+    sleep(2)
+    /// 在这里做刷新相关事件
+    /// ...
+    /// 如果你的刷新事件成功，设置completion自动重置footer的状态
+    self?.tableView?.es_stopPullToRefresh(ignoreDate: true)
+    /// 设置ignoreFooter来处理不需要显示footer的情况
+    self?.tableView?.es_stopPullToRefresh(ignoreDate: true, ignoreFooter: false)
+    }
+}
+~~~
+
