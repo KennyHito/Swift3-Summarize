@@ -18,43 +18,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow.init(frame: UIScreen.main.bounds)
-        var vcArr = [firstViewController(),secondViewController(),thirdViewController(),MeTableViewController()];
-        let titleArr = ["首页","二维码","购物车","个人中心"]
-        let imageNormalArr = ["b1-1","b3-3","b4-4","b5-5"]
-        let imageSelectArr = ["b1","b3","b4","b5"]
-        let tab = UITabBarController.init()
-        for i in 0...vcArr.count-1{
-            let vc : UIViewController = vcArr[i]
-            
-            vc.tabBarItem.image = UIImage.init(named: imageNormalArr[i])?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-            
-            vc.tabBarItem.selectedImage = UIImage.init(named: imageSelectArr[i])?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-            
-            vc.title = titleArr[i]
-            
-            let nav = UINavigationController.init(rootViewController: vc)
-            
-            //统一设置导航栏背景色
-            nav.navigationBar.barTintColor = RGBCOLOR(r: 118, 190, 14)
-            //统一设置导航栏字体颜色
-            nav.navigationBar.titleTextAttributes =
-                [NSForegroundColorAttributeName: UIColor.white]
-            
-            vcArr[i] = nav
-        }
-        tab.viewControllers = vcArr
-        tab.tabBar.tintColor = UIColor.init(colorLiteralRed: 118/255.0, green: 190/255.0, blue: 14/255.0, alpha: 1)
-        window?.rootViewController = tab
+        
+        window?.rootViewController = BaseTabBarController();
         window?.makeKeyAndVisible()
         
+        checkNetwork()
         
+        return true
+    }
+
+    // MARK: 网络监听
+    func checkNetwork() -> Void {
         reachability.whenReachable = { reachability in
             DispatchQueue.main.async {
                 if reachability.isReachableViaWiFi {
                     self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "当前网络是WiFi", time: 2.0)
-//                    print("Reachable via WiFi")
+                    
                 } else {
-                    print("Reachable via Cellular")
+                   self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "正在使用3G/4G网络!", time: 2.0)
                 }
             }
         }
@@ -62,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability.whenUnreachable = {reachability in
             DispatchQueue.main.async {
                 self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "当前网络无网络!", time: 2.0)
-//                print("Not reachable")
             }
         }
         
@@ -71,23 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("Unable to start notifier")
         }
-        
-        // 检测网络类型
-        if reachability.isReachableViaWiFi {
-            print("网络类型：Wifi")
-        } else if reachability.isReachableViaWWAN {
-            print("网络类型：移动网络")
-        } else {
-            print("网络类型：无网络连接")
-        }
-        
-        // MARK: 统一设置一些方法
-//        UINavigationBar.appearance()
-        
-        
-        return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
