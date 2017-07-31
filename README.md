@@ -40,9 +40,10 @@
 
 <div>
 <img width="250" height="400" src="image/12345.gif" />
-</div>
+</div></br>
 
     > 代码⬇️
+
 ~~~
 func checkNetwork() -> Void {
     reachability.whenReachable = { reachability in
@@ -70,8 +71,7 @@ func checkNetwork() -> Void {
 }
 ~~~
 
-
-
+* 
     > 下拉刷新
 
 ~~~
