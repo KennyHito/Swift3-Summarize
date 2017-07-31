@@ -14,6 +14,7 @@ class MeTableViewController: UITableViewController {
     var dataArr : NSMutableArray = NSMutableArray()
     var str : String = String()
     var headImageV : UIImageView = UIImageView()
+    var flag : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +68,10 @@ class MeTableViewController: UITableViewController {
         if indexPath.row == 5{
             let sw : UISwitch = UISwitch.init(frame: CGRect.init(x: 50, y: 50, width: 100, height: 50))
             sw.tag = 1000
-            sw.setOn(false, animated: true)
+            sw.setOn(false, animated: false)
+            if flag {
+                sw.setOn(true, animated: false)
+            }
             sw.addTarget(self, action: #selector(MeTableViewController.changeEvent), for: UIControlEvents.valueChanged)
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
             cell?.accessoryView = sw
@@ -90,7 +94,6 @@ class MeTableViewController: UITableViewController {
     // MARK: UISwitch开关按钮事件实现
     func changeEvent() -> Void {
         let sw : UISwitch = self.view.viewWithTag(1000) as! UISwitch
-        var flag : Bool = false
         flag = !flag
         if sw.isOn&&flag{
             self.view.window?.backgroundColor = UIColor.black
