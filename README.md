@@ -36,29 +36,28 @@
     > 网络监听
 
 ~~~
-// MARK: 
 func checkNetwork() -> Void {
-reachability.whenReachable = { reachability in
-DispatchQueue.main.async {
-if reachability.isReachableViaWiFi {
-self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "当前网络是WiFi", time: 2.0)
+    reachability.whenReachable = { reachability in
+        DispatchQueue.main.async {
+            if reachability.isReachableViaWiFi {
+                self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "当前网络是WiFi", time: 2.0)
 
-} else {
-self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "正在使用3G/4G网络!", time: 2.0)
-}
-}
-}
+            } else {
+                self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "正在使用3G/4G网络!", time: 2.0)
+            }
+        }
+    }
 
-reachability.whenUnreachable = {reachability in
-DispatchQueue.main.async {
-self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "当前网络无网络!", time: 2.0)
-}
-}
+    reachability.whenUnreachable = {reachability in
+        DispatchQueue.main.async {
+            self.Hito.showAlert(viewController: (self.window?.rootViewController)!, title: "温馨提示", message: "当前网络无网络!", time: 2.0)
+        }
+    }
 
-do{
-try reachability.startNotifier()
-} catch {
-print("Unable to start notifier")
-}
+    do{
+        try reachability.startNotifier()
+    } catch {
+        print("Unable to start notifier")
+    }
 }
 ~~~
