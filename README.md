@@ -34,13 +34,15 @@
 
 * 2017.07.21
 
-    > 网络监听
-    > 效果图
+    > 网络监听(如下:⬇️)
+
+    > 效果图⬇️
+
 <div>
 <img width="250" height="400" src="image/12345.gif" />
 </div>
 
-    > 代码
+    > 代码⬇️
 ~~~
 func checkNetwork() -> Void {
     reachability.whenReachable = { reachability in
